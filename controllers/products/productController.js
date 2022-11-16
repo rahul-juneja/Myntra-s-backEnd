@@ -72,24 +72,18 @@ const productController = {
             if(!req.params.category){
                 products = await Product.find()
             }else{
-                const inc_category = ['men', 'women', 'kids']
-                const invalid_products = inc_category.includes(req.params.category)
-                
-                if(!invalid_products){
-                    console.log("here")
+                // Checking if the category entered exists in the DB or not.
+                const exist = await Product.exists({category: req.params.category})
+                if(!exist){
                     return next(CustomErrorHandler.notFound("Products not found."))
                 }
-
                 products = await Product.find({category: req.params.category})
             }
             
         }catch(err){
             return next(new Error("Something wrong with the database."))
         }
-        console.log(products);
-        console.log(req.params.category)
         const { category } = products
-        console.log( category )
         res.json({
             products
         })
