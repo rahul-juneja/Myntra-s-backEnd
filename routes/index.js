@@ -13,7 +13,8 @@ router.post('/refreshtoken',refreshController.refresh)
 router.post('/logout', auth, loginController.logout)
 
 router.post ('/product/add', productController.addproducts)
-router.get('/products/', product, productController.showproducts)
+router.get('/products/', productController.showproducts)
+router.get('/products/:category', productController.showproducts)
 
 
 export default router;

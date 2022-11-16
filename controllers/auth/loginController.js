@@ -11,7 +11,7 @@ const loginController = {
         // Created a schema to get the values from FORM
         const loginSchema = Joi.object({
             email: Joi.string().email().required(),
-            pass: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required()
+            pass: Joi.string().pattern(new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[$@$!%*?&]).{8,30})')).required(),
         });
 
         // Check the validation of the schema
@@ -28,15 +28,15 @@ const loginController = {
         try {
             // Find One is the mongoDB function to find the email in DB
             const user = await User.findOne({ email: email})
-
+            console.log(user)
             // IF not then tell that email or password doesn't exists
             if (!user){
-                return next(CustomErrorHandler.wrongCredentials);
+                return next(CustomErrorHandler.wrongCredentials("Email is wrong or doesn't exists."));
             }
             // console.log(user)
             const match = await bcrypt.compare(pass, user.password)
             if (!match){
-                return next(CustomErrorHandler.wrongCredentials());
+                return next(CustomErrorHandler.wrongCredentials("Password is InCorrect!"));
             }
 
             // Token Genration
