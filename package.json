@@ -1,0 +1,34 @@
+{
+  "name": "nodejs_apis",
+  "version": "1.0.0",
+  "description": "First Express App",
+  "main": "App.js",
+  "scripts": {
+    "dev": "nodemon -r esm server.js",
+    "start": "node -r esm server.js"
+  },
+  "author": "rahuljuneja",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.3",
+    "esm": "^3.2.25",
+    "express": "^4.18.1",
+    "joi": "^17.7.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.11.0",
+    "mongoose": "^6.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahul-juneja/NodeJS_APIs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rahul-juneja/NodeJS_APIs/issues"
+  },
+  "homepage": "https://github.com/rahul-juneja/NodeJS_APIs#readme"
+}

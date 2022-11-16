@@ -1,0 +1,15 @@
+Routes
+- Get API
+- POST API
+Controllers
+- loginController
+- registerController
+MiddleWares
+- errorHandler
+Models
+- user // UserSchema
+// that contains Email, Name, Password Fields
+// and then create table in MongoDB
+Services
+- CustomService // That contain custom Service for user to send the custom service with custom message.
+- JwtService // That creates a access token that is used by the user for authentication and that is stored in the localStorage/Session Storage 
