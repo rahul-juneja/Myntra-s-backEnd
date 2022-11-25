@@ -23,7 +23,7 @@ const loginController = {
         }
         // Getting the values all the values from the body
         const {email, pass} = req.body
-        let access_token, refresh_token;
+        let access_token, refresh_token, userId;
         // After Validation we have to check the email and pass from DB
         try {
             // Find One is the mongoDB function to find the email in DB
@@ -34,6 +34,7 @@ const loginController = {
                 return next(CustomErrorHandler.wrongCredentials("Email is wrong or doesn't exists."));
             }
             // console.log(user)
+            userId = user._id
             const match = await bcrypt.compare(pass, user.password)
             if (!match){
                 return next(CustomErrorHandler.wrongCredentials("Password is InCorrect!"));
@@ -51,14 +52,14 @@ const loginController = {
         } catch (err) {
             return next(err)
         }
-        res.json({access_token, refresh_token})
+        res.json({access_token, refresh_token, id: userId})
     },
     async logout(req, res, next){
         const loginSchema = Joi.object({
             refresh_token: Joi.string().required(),
         });
 
-        console.log(req.user._id);
+        // console.log(req.user._id);
 
         // Check the validation of the schema
         const { error } = loginSchema.validate(req.body);
@@ -69,7 +70,6 @@ const loginController = {
         }
         try{
             await RefreshToken.deleteOne({token: req.body.refresh_token})
-            await User.deleteOne({_id: req.user._id})
         }catch(err){
             return next(new Error("Something went wrong in DB."))
         }
@@ -78,6 +78,17 @@ const loginController = {
 
 
         res.json({messsage: "Logout Successfully"});
+    },
+    async user(req, res, next){
+        try {
+            const user = await User.findOne({_id: req.user._id}).select('-password -updatedAt -__v')
+            if(!user){
+                return next(CustomErrorHandler.notFound())
+            }
+            res.json(user)
+        } catch (err) {
+            return next(err);
+        }
     }
 }
 export default loginController

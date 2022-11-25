@@ -5,16 +5,13 @@ const auth = async (req, res, next) => {
     let authHeader = req.headers.authorization;
 
     if (!authHeader){
-        next(CustomErrorHandler.unAuthorized())
+        return next(CustomErrorHandler.unAuthorized())
     }
     
     const token = authHeader.split(" ")[1]
     try {
         const {_id, role} = JwtService.verify(token)
-        const user = {
-            _id,
-            role
-        };
+        const user = { _id,role };
         req.user = user;
         next();
 

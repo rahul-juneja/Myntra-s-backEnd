@@ -65,6 +65,43 @@ const registerController = {
             // Displaying the Refresh Token in frontEnd
             res.json({ access_token, refresh_token })
         }
+    },
+    async delete(req, res, next){
+        const deleteSchema = Joi.object({
+            token: Joi.string().required()
+        })
+        const { error } = deleteSchema.validate(req.body)
+        if(error){
+            return next(error)
+        }
+        try{
+            const refreshtoken = await RefreshToken.findOne({
+                token: req.body.token
+            })
+
+            if (!refreshtoken){
+                return next(CustomErrorHandler.unAuthorized("Invalid Refresh Token."))
+            }
+            let userID
+            try{
+                const { _id } = await JwtService.verify(refreshtoken.token, REFRESH_TOKEN)
+                userID = _id
+                console.log(userID)
+            }catch(err){
+                return next(CustomErrorHandler.unAuthorized("Invalid Refresh Token."))
+            }
+
+            const user = await User.deleteOne({_id: userID})
+            if(!user){
+                return next(CustomErrorHandler.unAuthorized("User Not Found"))
+            }
+            res.json({message: "User Deleted Successfully."})
+        }catch(err){
+            next(err)
+        }
+
+
+
     }
 }
 
