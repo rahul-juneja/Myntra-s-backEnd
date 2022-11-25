@@ -4,7 +4,7 @@ const product = (req, res, next) =>{
     const productHeader = req.headers.product
     // console.log(productHeader);
     if(!productHeader){
-        next(CustomErrorHandler.unAuthorized())
+        return next(CustomErrorHandler.unAuthorized())
     }
     const token = productHeader.split(' ')[1]
     console.log(token);

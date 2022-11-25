@@ -1,0 +1,20 @@
+[{
+  "_id": {
+    "$oid": "637cfcd16cd8a3801e55f526"
+  },
+  "name": "Rahul Juneja",
+  "email": "rahul@orion.in",
+  "password": "$2b$10$86cJokAZoMTETpMR6DTtme1SbvuD5DkNKTDwKSw4P211okIPMWC9O",
+  "role": "user",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669135569980"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669135569980"
+    }
+  },
+  "__v": 0
+}]

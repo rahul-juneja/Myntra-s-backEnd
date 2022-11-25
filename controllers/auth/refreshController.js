@@ -16,10 +16,9 @@ const refreshController = {
         if (error) {
             return next(error)
         }
-        let refreshtoken;
         // Check token exists
         try {
-            refreshtoken = await RefreshToken.findOne({
+            const refreshtoken = await RefreshToken.findOne({
                 token: req.body.refresh_token
             })
 
@@ -28,9 +27,8 @@ const refreshController = {
             }
             let userId;
             try {
-                const { _id } = await JwtService.verify(refreshtoken.token,REFRESH_TOKEN);
+                const { _id } = JwtService.verify(refreshtoken.token,REFRESH_TOKEN);
                 userId = _id;
-                console.log(userId);
             } catch (err) {
                 return next(CustomErrorHandler.unAuthorized("Invalid Refresh Token"));
             }

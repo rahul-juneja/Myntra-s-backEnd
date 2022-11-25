@@ -22,7 +22,7 @@ const productController = {
         const { error } = addProductSchema.validate(req.body)
 
         if (error) {
-            next(error)
+            return next(error)
         }
 
         const {
@@ -78,6 +78,36 @@ const productController = {
                     return next(CustomErrorHandler.notFound("Products not found."))
                 }
                 products = await Product.find({category: req.params.category})
+            }
+            
+        }catch(err){
+            return next(new Error("Something wrong with the database."))
+        }
+        const { category } = products
+        res.json({
+            products
+        })
+    },
+    async productinfo(req, res, next) {
+        let products
+        // console.log(req.params._id)
+
+        try{
+            if(!req.params._id){
+                products = await Product.find()
+            }else{
+                // Checking if the category entered exists in the DB or not.
+                const exist = await Product.exists({
+                    category: req.params.category,
+                    _id: req.params._id 
+                })
+                if(!exist){
+                    return next(CustomErrorHandler.notFound("Products not found."))
+                }
+                products = await Product.find({
+                    category: req.params.category,
+                    _id: req.params._id
+                })
             }
             
         }catch(err){

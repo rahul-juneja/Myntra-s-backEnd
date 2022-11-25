@@ -30,4 +30,4 @@ app.use('/api', router)
 app.use(errorHandler);
 
 
-app.listen(APP_PORT, () => console.log(`Listening to ${APP_PORT}.`));
+app.listen(APP_PORT, () => console.log(`Listening to http://localhost:${APP_PORT}.`));
