@@ -20,6 +20,11 @@ router.get('/products/:category/:_id', productController.productinfo)
 
 router.post('/cart', cartController.showCart)
 router.post('/cart/add', cartController.addtoCart)
+
+router.get('/products/:category/:_id', productController.productinfo)
+
+router.post('/cart', cartController.showCart)
+router.post('/cart/add', cartController.addtoCart)
 router.post('/cart/delete', cartController.delProduct)
 
 
