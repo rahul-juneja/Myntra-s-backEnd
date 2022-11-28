@@ -21,7 +21,7 @@ const registerController = {
             pass: Joi.string().pattern(new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[$@$!%*?&]).{8,30})')).required(),
             repass: Joi.ref('pass')
         });
-        console.log(req.body)
+        // console.log(req.body)
         const { error } = registerSchema.validate(req.body);
 
         if (error) {
@@ -63,6 +63,7 @@ const registerController = {
             }
             // Displaying the Access Token in frontEnd
             // Displaying the Refresh Token in frontEnd
+            console.log("POST /register 200")
             res.json({ access_token, refresh_token })
         }
     },
@@ -86,7 +87,7 @@ const registerController = {
             try{
                 const { _id } = await JwtService.verify(refreshtoken.token, REFRESH_TOKEN)
                 userID = _id
-                console.log(userID)
+                // console.log(userID)
             }catch(err){
                 return next(CustomErrorHandler.unAuthorized("Invalid Refresh Token."))
             }
@@ -95,6 +96,7 @@ const registerController = {
             if(!user){
                 return next(CustomErrorHandler.unAuthorized("User Not Found"))
             }
+            console.log("POST /user/delete 200")
             res.json({message: "User Deleted Successfully."})
         }catch(err){
             next(err)

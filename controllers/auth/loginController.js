@@ -28,7 +28,7 @@ const loginController = {
         try {
             // Find One is the mongoDB function to find the email in DB
             const user = await User.findOne({ email: email})
-            console.log(user)
+            // console.log(user)
             // IF not then tell that email or password doesn't exists
             if (!user){
                 return next(CustomErrorHandler.wrongCredentials("Email is wrong or doesn't exists."));
@@ -52,6 +52,7 @@ const loginController = {
         } catch (err) {
             return next(err)
         }
+        console.log("POST /login 200")
         res.json({access_token, refresh_token, id: userId})
     },
     async logout(req, res, next){

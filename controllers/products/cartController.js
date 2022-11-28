@@ -17,7 +17,6 @@ const cartController = {
         if (error) {
             return next(error)
         }
-        console.log("POST /cart/add 200")
         const {userId, productId, quantity, size} = req.body
         const exists = await Cart.findOne({
             userId: userId,
@@ -36,7 +35,8 @@ const cartController = {
                     }
                 )
                 const qty = exists.quantity + 1
-                console.log("POST /cart/add 200 Quantity Updated")
+                console.log("POST /cart/add 200")
+                console.log("Quantity ++")
                 return res.json({
                     message: "Product already exists and its quantity has been updated",
                     qty: qty
@@ -61,15 +61,14 @@ const cartController = {
         } catch (err) {
             next(err)
         }
-        console.log("POST /cart/add 200 New Item added")
+        console.log("POST /cart/add 200")
         console.log("New Item Added..!")
 
 
 
     },
     async showCart(req, res, next){
-        console.log("Came to Cart Page")
-        console.log("Get /cart 200")
+        // console.log("Came to Cart Page")
         const {userId} = req.body
         // console.log(userId)
         // console.log(ObjectID(userId))
@@ -90,22 +89,18 @@ const cartController = {
             }
         ])
         // console.log(result)
+        console.log("Get /cart 200")
         res.json({result})
     },
     async delProduct(req, res, next){
-        console.log("Deleted Product")
-        console.log("Post /cart/delete 200")
+        // console.log("Deleted Product")
         const {userId, productId, size} = req.body
-        console.log(userId)
-        console.log(productId)
-        console.log(size)
         // console.log(userId)
-        // console.log(ObjectID(userId))
-        // const cart = await Cart.find({userId})
-
+        // console.log(productId)
+        // console.log(size)
         try{
             const exist = await Cart.findOne({userId: userId, productId: productId, size: size})
-            console.log(exist)
+            // console.log(exist)
             if (!exist){
                 return next(CustomErrorHandler.notFound("Product Doesn't exists in Cart."))
             }
@@ -113,6 +108,7 @@ const cartController = {
             if (!delete_product){
                 return next(new Error("Something is wrong with the DB."))
             }
+            console.log("Post /cart/delete 200")
             res.json({message:"Product Removed Successfully....!!"})
         }catch(err){
             return next(err)

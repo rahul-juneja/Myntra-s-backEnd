@@ -70,6 +70,7 @@ const productController = {
         let products
         try{
             if(!req.params.category){
+                // If Category doesn't exists in Params then All products
                 products = await Product.find()
             }else{
                 // Checking if the category entered exists in the DB or not.
@@ -84,6 +85,7 @@ const productController = {
             return next(new Error("Something wrong with the database."))
         }
         const { category } = products
+        console.log("Get /" + req.params.category + " 200")
         res.json({
             products
         })
@@ -99,7 +101,7 @@ const productController = {
                 // Checking if the category entered exists in the DB or not.
                 const exist = await Product.exists({
                     category: req.params.category,
-                    _id: req.params._id 
+                    _id: req.params._id
                 })
                 if(!exist){
                     return next(CustomErrorHandler.notFound("Products not found."))

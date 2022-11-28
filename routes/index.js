@@ -18,10 +18,6 @@ router.get('/products/', productController.showproducts)
 router.get('/products/:category', productController.showproducts)
 router.get('/products/:category/:_id', productController.productinfo)
 
-router.post('/cart', cartController.showCart)
-router.post('/cart/add', cartController.addtoCart)
-
-router.get('/products/:category/:_id', productController.productinfo)
 
 router.post('/cart', cartController.showCart)
 router.post('/cart/add', cartController.addtoCart)
