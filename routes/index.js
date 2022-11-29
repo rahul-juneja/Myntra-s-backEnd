@@ -15,8 +15,8 @@ router.post('/user/delete', registerController.delete)
 
 router.post ('/product/add', productController.addproducts)
 router.get('/products/', productController.showproducts)
-router.get('/products/:category', productController.showproducts)
-router.get('/products/:category/:_id', productController.productinfo)
+router.get('/products/category/:category', productController.showproducts)
+router.get('/products/product/:_id', productController.productinfo)
 
 
 router.post('/cart', cartController.showCart)
